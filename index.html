@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web khảo sát</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #ffe4e1;
+    }
+    h1 {
+      color: #ff69b4;
+      margin-top: 50px;
+    }
+    #welcomeScreen h1 {
+      color: black;
+    }
+    p {
+      font-size: 20px;
+      color: #555;
+    }
+    .button {
+      margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 18px;
+      color: white;
+      background-color: #ff69b4;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    #welcomeScreen .button, #q0 .button {
+      background-color: black;
+    }
+    .button:hover {
+      transform: scale(1.1);
+    }
+    #nameInput {
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid black;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    .hidden {
+      display: none !important;
+    }
+    #welcomeScreen, #q0, #q1, #q2, #q3 {
+      background-color: white;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .welcome-container {
+    position: relative;
+    width: 100vw; /* Full viewport width */
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    }
+    .welcome-gif {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+    }
+    .welcome-content {
+      flex: 1;
+      text-align: center;
+    }
+    /* Add to your style section */
+    #welcomeScreen, #q0, #q1, #q2, #q3, #q4, #q5, #q6, #q9, #q11, #q12, #q13 {
+      background-color: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .welcome-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    #q7 .welcome-container,
+    #q8 .welcome-container,
+    #q10 .welcome-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #q7 .welcome-content,
+    #q8 .welcome-content,
+    #q10 .welcome-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      z-index: 2;
+      background-color: rgba(255,255,255,0.9);
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    /* Side images positioning */
+    #q7 .side-left,
+    #q8 .side-left,
+    #q10 .side-left {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    #q7 .side-right,
+    #q8 .side-right,
+    #q10 .side-right {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    /* Text color for all questions */
+    h1, h2, p {
+      color: black;
+    }
+
+    /* Button styling consistent with welcomeScreen */
+    .button {
+      background-color: black;
+      color: white;
+    }
+
+    /* Fix the pink line issue */
+    body {
+      background-color: white;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Fix layout for single image screens */
+    .single-image-layout {
+      flex-direction: column;
+    }
+
+    .single-image-layout img {
+      margin-bottom: 30px;
+    }
+
+    #q14, #q16, #q17 {
+        background-color: #ffe4e1;
+   }
+
+   .q15-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #ffe4e1;
+  overflow: hidden;
+}
+
+.q15-content {
+  position: relative;
+  width: 400px;
+  padding: 20px;  
+  z-index: 100;
+}
+
+.q15-gif {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  position: absolute;
+  z-index: 1;
+}
+
+#noButton {
+  position: absolute;
+  background-color: #ff69b4;
+  margin: 10px;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+  </style>
+</head>
+<body>
+
+  <audio id="bgMusic" loop>
+    <source src="./Persona 5 OST- Beneath the Mask - jstark54323.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const bgMusic = document.getElementById('bgMusic');
+        
+        // Start music on first user interaction
+        document.addEventListener('click', function startMusic() {
+            bgMusic.play()
+                .then(() => {
+                    console.log("Music started");
+                    document.removeEventListener('click', startMusic);
+                })
+                .catch(err => console.log("Error playing music:", err));
+        }, { once: true });
+
+        // Set volume
+        bgMusic.volume = 0.5;
+    });
+  </script>
+
+  <div id="welcomeScreen">
+    <div class="welcome-container">
+      <img class="welcome-gif" src="https://media.giphy.com/media/3ov9jZ0V6gOO0oa98Y/giphy.gif" alt="Left GIF">
+      <div class="welcome-content">
+        <h1>Xin chào! Tên của bạn là gì nhỉ :3?</h1>
+        <input type="text" id="nameInput" placeholder="Nhập tên của bạn...">
+        <button class="button" onclick="continue_()">Tiếp tục</button>
+      </div>
+      <img class="welcome-gif" src="https://media.giphy.com/media/l0IyiygAO1k6RBTtS/giphy.gif" alt="Right GIF">
+    </div>
+  </div>
+
+  <div id="q0" class="hidden">
+    <div class="welcome-container">
+      <img class="welcome-gif" src="https://media.giphy.com/media/D6InoH7TLxMsM/giphy.gif" alt="Left GIF">
+      <div class="welcome-content">
+        <span id="greeting" style="font-size: 24px; display: block; margin-bottom: 20px;"></span>
+        <p style="margin-bottom: 20px;">Để AI dự đoán được bạn là người thiên về phía bán cầu não bên nào, mình xin phép được khảo sát bạn một số câu hỏi nhé :D!</p>
+        <button class="button" onclick="startSurvey()">OK!</button>
+      </div>
+      <img class="welcome-gif" src="https://media.giphy.com/media/hV0D15h8onMn9Pn6e7/giphy.gif" alt="Right GIF">
+    </div>
+  </div>
+
+  <div id="q1" class="hidden">
+    <div class="welcome-container">
+      <div class="welcome-content">
+        <img class="welcome-gif" src="https://media.giphy.com/media/ny7UCd6JETnmE/giphy.gif" alt="Question 1 GIF">
+        <h1>Câu 1: Bạn có tự nhận thấy mình là 1 người ham học hỏi?</h1>
+        <button class="button" onclick="showQ2()">Có</button>
+        <button class="button" onclick="showQ2()">Không</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="q2" class="hidden">
+    <div class="welcome-container">
+      <div class="welcome-content">
+        <img class="welcome-gif" src="https://media.giphy.com/media/fhAwk4DnqNgw8/giphy.gif" alt="Question 2 GIF">
+        <h1>Câu 2: Bạn thích môn học nào nhất?</h1>
+        <button class="button" onclick="showQ3()">Toán và các môn tương tự thiên về suy nghĩ</button>
+        <button class="button" onclick="showQ3()">Âm nhạc và các môn tương tự thiên về nghệ thuật</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="q3" class="hidden">
+    <div class="welcome-container">
+      <div class="welcome-content"></div>
+        <img class="welcome-gif" src="https://media.giphy.com/media/aQwvKKi4Lv3t63nZl9/giphy.gif" alt="Question 3 GIF">
+        <h1>Câu 3: Khi nghe bài hát mới, bạn thường:</h1>
+        <button class="button" onclick="showQ4()">Tìm ngay lời bài hát</button>
+        <button class="button" onclick="showQ4()">Lắng nghe nhịp và giai điệu trước</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="q4" class="hidden">
+    <div class="welcome-container">
+      <div class="welcome-content">
+        <img class="welcome-gif" src="https://media.giphy.com/media/m6exQkMQ2h6lahpPiY/giphy.gif?cid=790b7611waymgjyinhwongqmdoirokzl0pbee9v79ic6t6yp&ep=v1_stickers_search&rid=giphy.gif&ct=s" alt="Question 4 GIF">
+        <h1>Câu 4: Khi gặp gỡ một ai đó, bạn thường :</h1>
+        <button class="button" onclick="showQ5()">Tới sớm hơn hoặc đúng giờ</button>
+        <button class="button" onclick="showQ5()">Tới đúng giờ hoặc hơi trễ</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="q5" class="hidden">
+    <div class="welcome-container">
+      <div class="welcome-content">
+        <img class="welcome-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmk0enl4cmh6M3ZhYnk2eG11aHg0M3pwem5vaXE2ZzhjOXY0ZGZlaCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/NFA61GS9qKZ68/giphy.gif" alt="Question 5 GIF">
+        <h1>Câu 5: Khi đang đọc một quyển sách hoặc một bài báo:</h1>
+        <button class="button" onclick="showQ6()">Thường tập trung vào từng chữ và từng chi tiết</button>
+        <button class="button" onclick="showQ6()">Thường lướt qua và chỉ tập trung vào những chi tiết thú vị</button>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <script>
+    function continue_() {
+      const name = document.getElementById('nameInput').value.trim();
+      if (!name) {
+        alert('Vui lòng nhập tên của bạn!');
+        return;
+      }
+      document.getElementById('welcomeScreen').classList.add('hidden');
+      document.getElementById('q0').classList.remove('hidden');
+      document.getElementById('greeting').textContent = `${name} thân mến,`;
+    }
+
+    function startSurvey() {
+      document.getElementById('q0').classList.add('hidden');
+      document.getElementById('q1').classList.remove('hidden');
+    }
+
+    function showQ2() {
+      document.getElementById('q1').classList.add('hidden');
+      document.getElementById('q2').classList.remove('hidden');
+    }
+
+    function showQ3() {
+      document.getElementById('q2').classList.add('hidden');
+      document.getElementById('q3').classList.remove('hidden');
+    }
+
+    function showQ4() {
+      document.getElementById('q3').classList.add('hidden');
+      document.getElementById('q4').classList.remove('hidden');
+    }
+
+    function showQ5() {
+      document.getElementById('q4').classList.add('hidden');
+      document.getElementById('q5').classList.remove('hidden');
+    }
+
+    
+  </script>
+</body>
+</html>
